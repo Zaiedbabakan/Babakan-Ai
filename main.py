@@ -1,25 +1,25 @@
-import Streamlit as st
-import permintaan
-from PIL import Gambar
+import streamlit as st
+import requests
+from PIL import Image
 from io import BytesIO
 
-st.set_page_config(judul_halaman="AI Gambar Kupang")
-st.judul("🎨 Gambar AI Gratis")
-mengingatkan = st.input_teks("Ketik prompt gambar:")
+st.set_page_config(page_title="AI Gambar Kupang")
+st.title("🎨 Gambar AI Gratis")
+prompt = st.text_input("Ketik prompt gambar:")
 
-jika st.tombol("Buat Gambar"):
-    jika mengingatkan:
-        dengan st.pemintal("Lagi bikin gambar..."):
-            URL = f"https://image.pollinations.ai/prompt/{mengingatkan}"
-            respons = permintaan.mendapatkan(URL)
+if st.button("Buat Gambar"):
+    if prompt:
+        with st.spinner("Lagi bikin gambar..."):
+            URL = f"https://image.pollinations.ai/prompt/{prompt}"
+            response = requests.get(URL)
             
-            jika respons.status_code == 200:
-                coba:
-                    gambar = Gambar.membuka(BytesIO(respons.isi))
-                    st.gambar(gambar, keterangan=mengingatkan)
-                kecuali:
-                    st.kesalahan("Gagal bikin gambar. API lagi ngaco, coba prompt lain ya 😅")
-            kalau tidak:
-                st.kesalahan(f"API error kode: {respons.status_code}. Coba lagi nanti")
-    kalau tidak:
-        st.peringatan("Isi prompt dulu bang")
+            if response.status_code == 200:
+                try:
+                    img = Image.open(BytesIO(response.content))
+                    st.image(img, caption=prompt)
+                except:
+                    st.error("Gagal bikin gambar. API lagi ngaco, coba prompt lain ya 😅")
+            else:
+                st.error(f"API error kode: {response.status_code}. Coba lagi nanti")
+    else:
+        st.warning("Isi prompt dulu bang")
