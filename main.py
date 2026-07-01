@@ -11,7 +11,7 @@ prompt = st.text_input("Mau generate gambar apa?", "a cat wearing a wizard hat")
 if st.button("GENERATE"):
     with st.spinner("Lagi bikin gambar... tunggu 10 detik"):
         output = replicate.run(
-            "black-forest-labs/flux-schnell", # Model AI gratis paling cepet
+            "black-forest-labs/flux-schnell:latest", # Model AI gratis paling cepet
             input={"prompt": prompt}
         )
         st.image(output[0])
