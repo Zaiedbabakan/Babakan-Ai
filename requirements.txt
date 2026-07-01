@@ -1,6 +1,7 @@
-streamlit
+streamlit==1.32.0
 diffusers==0.25.0
-transformers
-accelerate
-Pillow
-torch
+transformers==4.38.2
+accelerate==0.27.2
+Pillow==10.2.0
+torch==2.1.2+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
