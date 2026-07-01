@@ -14,7 +14,10 @@ style = st.selectbox("🎨 Gaya", ["Cinematic 8K", "Anime 4K", "3D Pixar", "Digi
 if st.button("🚀 GENERATE SEKARANG"):
     with st.spinner("AI lagi ngelukis... 15 detik"):
         full_prompt = f"{prompt}, {style.lower()}, ultra detailed, masterpiece"
-        output = replicate.run("black-forest-labs/flux-schnell", input={"prompt": full_prompt})
+            output = replicate.run(
+        "stability-ai/stable-diffusion-xl-base-1.0",
+        input={"prompt": full_prompt}
+            )
         st.success("✅ Jadi!")
         st.image(output[0])
         st.download_button("📥 Download", output[0], "hasil_ai.png")
